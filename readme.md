@@ -210,7 +210,8 @@ components:
 
 
 
-Elasticsearch Mapping
+**Elasticsearch Mapping**
+
 {
   "mappings": {
     "properties": {
