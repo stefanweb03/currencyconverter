@@ -1,9 +1,9 @@
-**Currency Converter Application**
+#Currency Converter Application
 
-Main Goal:
+**Main Goal:**
 Develop a robust REST API application for currency conversion. This application will facilitate real-time currency exchange information and conversion services, ensuring accurate and up-to-date financial data exchange.
 
-Key Technologies:
+**Key Technologies:**
 
 Spring Boot: Utilized for building a scalable and efficient backend. It simplifies the development process and provides a robust framework for handling API requests.
 
@@ -13,7 +13,7 @@ Postman: Essential for testing the API, ensuring that all endpoints respond corr
 
 React: Employed for the frontend development. React is a versatile framework for building dynamic and responsive user interfaces.
 
-Development Process:
+**Development Process:**
 
 Backend Setup (Spring Boot and PostgreSQL): Establish the server, define data models, and connect to the PostgreSQL database to manage currency data and user preferences.
 
@@ -27,7 +27,7 @@ Frontend Development (React): Develop user interfaces for currency conversion, v
 
 Integration of Frontend and Backend: Ensure seamless interaction between the user interface and the server for a smooth user experience.
 
-Benefits:
+**Benefits:**
 
 Real-time Data Access: Provides users with the latest currency exchange rates.
 User-friendly Interface: Angular frontend offers an intuitive and responsive user experience.
@@ -35,7 +35,7 @@ Reliable Data Storage: PostgreSQL ensures the integrity and availability of hist
 Comprehensive Testing: Ensures the reliability and accuracy of the currency conversion service.
 SECOND PART
 
-Entities:
+**Entities:**
 
 Create Java classes for entities like Currency, ExchangeRate, and UserAccount.
 Repositories:
@@ -210,7 +210,7 @@ components:
 
 
 
-**Elasticsearch Mapping**
+#Elasticsearch Mapping
 
 {
   "mappings": {
@@ -244,9 +244,9 @@ components:
 
 The Elasticsearch mapping for the currency converter application is designed to optimize data storage and retrieval processes. This mapping defines the data types and structures for various fields relevant to currency conversion. Below is a detailed explanation of each field in the mapping:
 
-Field: currencyCode
+**Field: currencyCode**
 
-Type: keyword
+**Type: keyword**
 Description: The currencyCode field is defined as a keyword type. This choice is particularly suitable for scenarios requiring exact match queries. For instance, when a user needs to retrieve data for a specific currency code, the keyword type ensures precise and efficient querying.
 Field: rate
 
