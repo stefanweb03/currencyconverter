@@ -1,4 +1,4 @@
-Currency Converter Application
+**Currency Converter Application**
 
 Main Goal:
 Develop a robust REST API application for currency conversion. This application will facilitate real-time currency exchange information and conversion services, ensuring accurate and up-to-date financial data exchange.
