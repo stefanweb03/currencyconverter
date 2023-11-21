@@ -1,76 +1,50 @@
-#Currency Converter Application
 
-**Main Goal:**
-Develop a robust REST API application for currency conversion. This application will facilitate real-time currency exchange information and conversion services, ensuring accurate and up-to-date financial data exchange.
+# Currency Converter Application
 
-**Key Technologies:**
+## Main Goal
+Develop a robust REST API application for currency conversion. This application aims to provide real-time currency exchange information and conversion services, ensuring accurate and up-to-date financial data exchange.
 
-Spring Boot: Utilized for building a scalable and efficient backend. It simplifies the development process and provides a robust framework for handling API requests.
+## Key Technologies
 
-PostgreSQL: Chosen as the database management system for storing historical exchange rates and user data. PostgreSQL offers reliability and efficient data retrieval.
+- **Spring Boot**: A cornerstone for building a scalable and efficient backend. It streamlines the development process and offers a robust framework for API request handling.
+- **PostgreSQL**: Our chosen database management system, ideal for storing historical exchange rates and user data. Known for its reliability and efficient data retrieval capabilities.
+- **Postman**: A crucial tool for API testing, ensuring that all endpoints are responsive and handle various HTTP requests as expected.
+- **React**: The technology behind our frontend development. React's versatility makes it an excellent choice for crafting dynamic and responsive user interfaces.
 
-Postman: Essential for testing the API, ensuring that all endpoints respond correctly and handle various HTTP requests as expected.
+## Development Process
 
-React: Employed for the frontend development. React is a versatile framework for building dynamic and responsive user interfaces.
+1. **Backend Setup (Spring Boot and PostgreSQL)**: Setting up the server, defining data models, and integrating with the PostgreSQL database to manage currency data and user preferences.
+2. **Database Design and Schema**: Crafting a schema to efficiently store currency exchange rates, user queries, and other pertinent data.
+3. **Implementing RESTful Endpoints**: Developing endpoints for currency conversion, accessing current and historical exchange rates, and managing user accounts.
+4. **Testing with Postman**: Conducting thorough testing of each endpoint to ensure precise data handling and responses.
+5. **Frontend Development (React)**: Creating user interfaces for currency conversion, exchange rate viewing, and user account management.
+6. **Integration of Frontend and Backend**: Seamlessly connecting the user interface with the server to provide a fluid user experience.
 
-**Development Process:**
+## Benefits
 
-Backend Setup (Spring Boot and PostgreSQL): Establish the server, define data models, and connect to the PostgreSQL database to manage currency data and user preferences.
+- **Real-time Data Access**: Offering users the most current currency exchange rates.
+- **User-friendly Interface**: The React frontend delivers an intuitive and responsive experience.
+- **Reliable Data Storage**: PostgreSQL guarantees the integrity and availability of historical exchange rate data.
+- **Comprehensive Testing**: Ensuring the reliability and precision of our currency conversion service.
 
-Database Design and Schema: Design a schema to efficiently store currency exchange rates, user queries, and other relevant data.
+## Entities
 
-Implementing RESTful Endpoints: Create endpoints for currency conversion, retrieving current and historical exchange rates, and user account management.
+- **Java Classes**: Creating entities like Currency, ExchangeRate, and UserAccount.
+- **Repositories**: Implementing Spring Data JPA repositories for entities such as CurrencyRepository and ExchangeRateRepository.
+- **Service Layer**: Developing services like CurrencyService and UserService for business logic.
+- **Controller Layer**: Establishing controllers like CurrencyController and UserController with methods for API endpoints.
+- **Request and Response DTOs**: Defining DTOs for efficient data transfer in API requests and responses.
+- **Exception Handling**: Implementing both global and controller-specific exception handling.
+- **Security**: Utilizing Spring Security for authentication and authorization, potentially integrating OAuth2 for user accounts.
+- **Documentation**: Incorporating Swagger for comprehensive API documentation.
+- **Dependency Management**: Employing Maven or Gradle for dependency management.
+- **Configuration**: Setting up application properties and database configurations in line with Spring Boot standards.
 
-Testing with Postman: Rigorously test each endpoint to ensure accurate data handling and response.
+## Swagger Sample Code
 
-Frontend Development (React): Develop user interfaces for currency conversion, viewing exchange rates, and managing user accounts.
+Defining OpenAPI specifications for endpoints like `/convert`, `/rates`, `/user/login`, etc.
 
-Integration of Frontend and Backend: Ensure seamless interaction between the user interface and the server for a smooth user experience.
-
-**Benefits:**
-
-Real-time Data Access: Provides users with the latest currency exchange rates.
-User-friendly Interface: Angular frontend offers an intuitive and responsive user experience.
-Reliable Data Storage: PostgreSQL ensures the integrity and availability of historical exchange rate data.
-Comprehensive Testing: Ensures the reliability and accuracy of the currency conversion service.
-SECOND PART
-
-**Entities:**
-
-Create Java classes for entities like Currency, ExchangeRate, and UserAccount.
-Repositories:
-
-Implement Spring Data JPA repositories for each entity, such as CurrencyRepository and ExchangeRateRepository.
-Service Layer:
-
-Develop services like CurrencyService and UserService for business logic.
-Controller Layer:
-
-Create controllers like CurrencyController and UserController with methods for API endpoints.
-Request and Response DTOs:
-
-Define DTOs for handling data transfer in API requests and responses.
-Exception Handling:
-
-Implement global and controller-specific exception handling.
-Security:
-
-Use Spring Security for authentication and authorization, possibly with OAuth2 for user accounts.
-Documentation:
-
-Integrate Swagger for API documentation.
-Dependency Management:
-
-Use Maven or Gradle for managing dependencies.
-Configuration:
-
-Set up application properties and database configurations according to Spring Boot standards.
-SWAGGER SAMPLE CODE
-
-Define OpenAPI specifications for endpoints like /convert, /rates, /user/login, etc.
-ElasticSearch Mapping:
-
-I Create mappings for entities like Currency and ExchangeRate with properties such as code, rate, timestamp.
+```yaml
 
 openapi: 3.0.0
 info:
@@ -208,21 +182,22 @@ components:
           type: string
           format: date-time
 
+```
 
+## Elasticsearch Mapping
 
-#Elasticsearch Mapping
-
+```json
 {
   "mappings": {
     "properties": {
       "currencyCode": {
-        "type": "keyword"  // Use 'keyword' for exact matches, important for currency codes
+        "type": "keyword"  // Ideal for exact matches, crucial for currency codes
       },
       "rate": {
-        "type": "double"  // Suitable for storing exchange rates with precision
+        "type": "double"  // Perfect for storing exchange rates with precision
       },
       "timestamp": {
-        "type": "date",  // Date type for timestamp, with custom format if needed
+        "type": "date",  // Date type for timestamp, customizable format
         "format": "strict_date_optional_time||epoch_millis"
       },
       "historicalRates": {
@@ -240,23 +215,24 @@ components:
     }
   }
 }
+```
 
+### Detailed Explanation of Elasticsearch Mapping
 
-The Elasticsearch mapping for the currency converter application is designed to optimize data storage and retrieval processes. This mapping defines the data types and structures for various fields relevant to currency conversion. Below is a detailed explanation of each field in the mapping:
+- **Field: `currencyCode`**
+  - **Type:** `keyword`
+  - **Description:** Optimized for exact match queries, essential for identifying specific currency codes.
+- **Field: `rate`**
+  - **Type:** `double`
+  - **Description:** Designed to store exchange rates with decimal precision.
+- **Field: `timestamp`**
+  - **Type:** `date`
+  - **Description:** Customizable to match the application's date format, ensuring consistency in date representations.
+- **Field: `historicalRates`**
+  - **Type:** `nested`
+  - **Description:** Ideal for storing complex objects like historical exchange rate data, with sub-fields for date and rate.
 
-**Field: currencyCode**
-
-**Type: keyword**
-Description: The currencyCode field is defined as a keyword type. This choice is particularly suitable for scenarios requiring exact match queries. For instance, when a user needs to retrieve data for a specific currency code, the keyword type ensures precise and efficient querying.
-Field: rate
-
-Type: double
-Description: The rate field is set as a double. This data type is essential for representing exchange rates, as it accommodates decimal values. The use of double ensures that the exchange rates are stored with the necessary precision.
-Field: timestamp
-
-Type: date
-Description: The timestamp field is of the date type. This field can be formatted to align with the specific date format utilized within the application. The flexibility in formatting is crucial for maintaining consistency in date representations across different data entries.
-Field: historicalRates
+This documentation is crafted to provide a comprehensive overview of the Currency Converter Application, detailing its goals, technologies, development process, and the intricacies of its Elasticsearch mapping.
 
 Type: nested
 Description: The historicalRates field is categorized as a nested type. This structure is particularly useful for storing complex objects, such as historical exchange rate data. Within each historicalRates object, there are sub-fields for date (of date type) and rate (of double type). This nested arrangement allows for efficient organization and retrieval of historical rate information for each currency.
