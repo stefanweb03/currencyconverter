@@ -129,5 +129,17 @@ def get_conversions():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@app.route('/api/exchange-rate', methods=['GET'])
+def get_exchange_rate():
+    base_currency = request.args.get('base_currency')
+    target_currency = request.args.get('target_currency')
+
+    for rate in exchange_rates:
+        if rate['base_currency'] == base_currency and rate['target_currency'] == target_currency:
+            return jsonify(rate)
+
+    return jsonify({"error": "Exchange rate not found"}), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
