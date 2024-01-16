@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+<body>
+<div class="main_body">
+    <h1>Currency Converter</h1>
+    <div class="input-form">
+        <p for="fromCurrency">From Currency:</p>
+        <input type="text" id="fromCurrency" placeholder="USD">
+    </div>
+    <div class="input-form">
+        <p for="toCurrency">To Currency:</p>
+        <input type="text" id="toCurrency" placeholder="EUR">
+    </div>
+    <div class="input-form">
+        <p for="amount">Amount:</p>
+        <input type="number" id="amount" placeholder="100">
+    </div>
+    <div class="buttons-form">
+    <button id="convertButton">Convert</button>
+    <button id="available_conversion">Show conversion rates</button>
+    </div>
+    <div id="result"></div>
+    <div class="currency-rates">
+        <h2>Currency Conversion Rates</h2>
+        <ul id="conversionRatesList"></ul>
+    </div>
+</div>
+
+<script>
+    document.getElementById("convertButton").addEventListener("click", () => {
+    const fromCurrency = document.getElementById("fromCurrency").value;
+    const toCurrency = document.getElementById("toCurrency").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+
+    fetch('http://localhost:5000/api/convert', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ from: fromCurrency, to: toCurrency, amount: amount })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if ("error" in data) {
+            document.getElementById("result").innerHTML = `<p>Error: ${data.error}</p>`;
+        } else {
+            document.getElementById("result").innerHTML = `
+                <p>Converted Amount: ${data.convertedAmount}</p>
+                <p>Original Amount: ${data.originalAmount}</p>
+                <p>From Currency: ${data.fromCurrency}</p>
+                <p>To Currency: ${data.toCurrency}</p>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("result").innerHTML = '<p>Error occurred during conversion</p>';
+    });
+});
+
+// Function to display conversion rates
+function displayConversionRates(rates) {
+    const conversionRatesList = document.getElementById("conversionRatesList");
+    conversionRatesList.innerHTML = ""; // Clear the existing list
+
+    for (const rate of rates) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${rate.base_currency} to ${rate.target_currency}: ${rate.rate}`;
+        conversionRatesList.appendChild(listItem);
+    }
+}
+
+document.getElementById("available_conversion").addEventListener("click", () => {
+    // Fetch and display conversion rates on page load
+    fetch('http://localhost:5000/api/conversion-rates', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (Array.isArray(data)) {
+            displayConversionRates(data);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+</script>
+</body>
+</html>

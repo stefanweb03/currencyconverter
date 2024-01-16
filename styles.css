@@ -1,0 +1,75 @@
+body {
+    background-color: #f0f0f0;
+    display: block;
+    justify-content: center;
+    align-items:center;
+}
+
+/* Style headings */
+h1, h2 {
+    color: #333;
+    margin: 20px auto !important;
+   text-align: center;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+p{
+text-align: center;
+}
+.currency-rates{
+width: 25%;
+margin: 10px auto;
+display:block;
+justify-content: center;
+text-align: center;
+background-color: #f0ffff;
+border-radius: 10px;
+padding: 0.5rem;
+
+}
+.input-form{
+width: 20%;
+padding:.2rem;
+margin: 10px auto;
+display:block !important;
+justify-content: center;
+align-items: centers
+}
+
+.buttons-form{
+width: 20%;
+margin: 10px auto;
+display:flex;
+justify-content: space-between;
+}
+/* Style buttons */
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+
+/* Customize form elements */
+input[type="text"], input[type="number"] {
+    width: 92%;
+    padding: 10px;
+    margin: 10px auto !important;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

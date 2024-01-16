@@ -1,0 +1,195 @@
+# from flask import Flask, request, jsonify
+# from elasticsearch import Elasticsearch, NotFoundError
+# from products_data import products
+# from product_functions import *
+
+# app = Flask(__name__)
+
+# # Connect to your hosted Elasticsearch deployment
+# es = Elasticsearch(
+#     cloud_id='1cde9a19870d4381a79dea0eaaf2b671:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvOjQ0MyRhZWEzYTBjMmMxZTg0ZDM3ODc1ZjNhN2FkNGRkY2M0MSRlMTk1NzFjZWViNGQ0Yzc1OWFiYjliOGYwY2IyNzUxZA==',
+#     basic_auth=('elastic', 'WzoSfe5Z3KSdn8G7oMK0brIs')
+# )
+
+# # Specify the index name
+# index_name = 'search-event'
+
+# # Delete the existing index (ignore if it doesn't exist)
+# es.indices.delete(index=index_name, ignore=[400, 404])
+
+# # Index each product
+# for product in products:
+#     es.index(index=index_name, body=product)
+
+# print("Products indexed successfully.")
+
+# # # Routes
+# # @app.route('/api/products', methods=['GET'])
+# # def get_all_products():
+# #     return get_all_products_func()
+
+# # @app.route('/api/products/<int:product_id>', methods=['GET'])
+# # def get_product_by_id(product_id):
+# #     return get_all_products_func(product_id)
+
+# # @app.route('/api/products', methods=['POST'])
+# # def add_product():
+# #     return add_product_func()
+
+# # @app.route('/api/products/<int:product_id>', methods=['DELETE'])
+# # def delete_product(product_id):
+# #     return delete_product_by_id_func(product_id)
+
+# @app.route('/api/products', methods=['GET'])
+# def get_all_products():
+#     name_filter = request.args.get('name')
+#     if name_filter:
+#         es_query = {"query": {"match": {"name": name_filter}}}
+#         result = es.search(index=index_name, body=es_query)
+#         hits = result['hits']['hits']
+#         return jsonify(hits)
+#     else:
+#         result = es.search(index=index_name, body={"query": {"match_all": {}}})
+#         hits = result['hits']['hits']
+#         return jsonify(hits)
+
+# # New route to get a product by ID
+# @app.route('/api/products/<int:product_id>', methods=['GET'])
+# def get_product_by_id(product_id):
+#     es_query = {"query": {"match": {"id": product_id}}}
+#     result = es.search(index=index_name, body=es_query)
+#     hits = result['hits']['hits']
+
+#     if hits:
+#         return jsonify(hits[0])
+#     else:
+#         return jsonify({"message": f"Product with ID {product_id} not found"}), 404
+
+# # New route to add a new product
+# @app.route('/api/products', methods=['POST'])
+# def add_product():
+#     try:
+#         # Get the product details from the request
+#         product_data = request.json
+
+#         # Index the new product in Elasticsearch
+#         es.index(index=index_name, body=product_data)
+
+#         return jsonify({"message": "Product added successfully"}), 201
+#     except Exception as e:
+#         return jsonify({"message": f"Failed to add product. Error: {str(e)}"}), 500
+
+# # Route to delete a product by ID
+# @app.route('/api/products/<int:product_id>', methods=['DELETE'])
+# def delete_product(product_id):
+#     # Your code to delete the product with the given ID from Elasticsearch
+#     index_name = 'search-event'  # Replace with your actual index name
+    
+#     try:
+#         # Delete the document in Elasticsearch based on the "id" field
+#         result = es.delete_by_query(
+#             index=index_name,
+#             body={"query": {"match": {"id": product_id}}}
+#         )
+
+#         # Check if any documents were deleted
+#         if result.get('deleted', 0) > 0:
+#             return jsonify({"message": "Product deleted successfully"}), 201
+#         else:
+#             return jsonify({"error": f"Product with ID {product_id} not found"}), 404
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+# ------------------------------------------------
+
+
+
+# @app.route('/api/products', methods=['GET'])
+# def get_all_products():
+#     name_filter = request.args.get('name')
+#     if name_filter:
+#         es_query = {"query": {"match": {"name": name_filter}}}
+#         result = es.search(index=index_name, body=es_query)
+#         hits = result['hits']['hits']
+#         return jsonify(hits)
+#     else:
+#         result = es.search(index=index_name, body={"query": {"match_all": {}}})
+#         hits = result['hits']['hits']
+#         return jsonify(hits)
+
+# # New route to get a product by ID
+# @app.route('/api/products/<int:product_id>', methods=['GET'])
+# def get_product_by_id(product_id):
+#     es_query = {"query": {"match": {"id": product_id}}}
+#     result = es.search(index=index_name, body=es_query)
+#     hits = result['hits']['hits']
+
+#     if hits:
+#         return jsonify(hits[0])
+#     else:
+#         return jsonify({"message": f"Product with ID {product_id} not found"}), 404
+
+# # New route to add a new product
+# @app.route('/api/products', methods=['POST'])
+# def add_product():
+#     try:
+#         # Get the product details from the request
+#         product_data = request.json
+
+#         # Index the new product in Elasticsearch
+#         es.index(index=index_name, body=product_data)
+
+#         return jsonify({"message": "Product added successfully"}), 201
+#     except Exception as e:
+#         return jsonify({"message": f"Failed to add product. Error: {str(e)}"}), 500
+
+# # Route to delete a product by ID
+# @app.route('/api/products/<int:product_id>', methods=['DELETE'])
+# def delete_product(product_id):
+#     # Your code to delete the product with the given ID from Elasticsearch
+#     index_name = 'search-event'  # Replace with your actual index name
+    
+#     try:
+#         # Delete the document in Elasticsearch based on the "id" field
+#         result = es.delete_by_query(
+#             index=index_name,
+#             body={"query": {"match": {"id": product_id}}}
+#         )
+
+#         # Check if any documents were deleted
+#         if result.get('deleted', 0) > 0:
+#             return jsonify({"message": "Product deleted successfully"}), 201
+#         else:
+#             return jsonify({"error": f"Product with ID {product_id} not found"}), 404
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+#     # Route to update a product by ID
+# @app.route('/api/products/<int:product_id>', methods=['PUT'])
+# def update_product(product_id):
+#     try:
+#         # Get the updated product details from the request
+#         updated_product_data = request.json
+
+#         # Retrieve the existing product from Elasticsearch
+#         es_query = {"query": {"match": {"id": product_id}}}
+#         result = es.search(index=index_name, body=es_query)
+#         hits = result['hits']['hits']
+
+#         # Check if the product with the specified ID exists
+#         if not hits:
+#             return jsonify({"error": f"Product with ID {product_id} not found"}), 404
+
+#         # Get the existing product details
+#         existing_product = hits[0]['_source']
+
+#         # Perform the update (you may customize this based on your update logic)
+#         existing_product.update(updated_product_data)
+
+#         # Update the document in Elasticsearch
+#         es.update(index=index_name, id=hits[0]['_id'], body={"doc": existing_product})
+
+#         return jsonify({"message": f"Product with ID {product_id} updated successfully"}), 200
